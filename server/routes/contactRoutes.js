@@ -18,9 +18,17 @@ const validateContact = [
 // @access  Public
 router.post('/', validateContact, async (req, res) => {
   try {
+    // Log received data for debugging
+    console.log('Contact form data received:', JSON.stringify(req.body, null, 2));
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      console.log('Validation errors:', JSON.stringify(errors.array(), null, 2));
+      return res.status(400).json({ 
+        success: false,
+        message: 'Validation failed',
+        errors: errors.array() 
+      });
     }
 
     const { name, email, subject, message } = req.body;
