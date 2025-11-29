@@ -7,6 +7,8 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  /* Default/Purple Theme (Original) - Applied to :root as fallback */
+  /* Theme classes defined AFTER :root will override it due to cascade order */
   :root {
     --background: 0 0% 100%;
     --foreground: 264 70% 25%;
@@ -52,6 +54,302 @@ All colors MUST be HSL.
     /* Section backgrounds */
     --section-bg: 0 0% 99%;
     --section-alt: 270 50% 98%;
+  }
+  /* Default/Purple Theme (Original) - Same as :root, for explicit theme-default class */
+  html.theme-default,
+  .theme-default {
+    --background: 0 0% 100%;
+    --foreground: 264 70% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 264 70% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 264 70% 25%;
+
+    /* Purple gradient primary colors */
+    --primary: 264 54% 49%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 270 60% 70%;
+    --primary-dark: 264 70% 35%;
+
+    /* Glassmorphism backgrounds */
+    --glass-bg: 0 0% 100%;
+    --glass-border: 270 50% 85%;
+
+    --secondary: 270 50% 96%;
+    --secondary-foreground: 264 70% 35%;
+
+    --muted: 270 50% 97%;
+    --muted-foreground: 264 30% 50%;
+
+    --accent: 270 60% 95%;
+    --accent-foreground: 264 70% 35%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 40% 90%;
+    --input: 270 40% 90%;
+    --ring: 264 54% 49%;
+
+    /* Custom gradient stops */
+    --gradient-from: 264 54% 49%;
+    --gradient-to: 270 60% 70%;
+
+    /* Section backgrounds */
+    --section-bg: 0 0% 99%;
+    --section-alt: 270 50% 98%;
+  }
+
+  /* Blue Theme - Clean, Professional, Bright */
+  html.theme-blue,
+  .theme-blue {
+    --background: 0 0% 98%;
+    --foreground: 220 30% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 20%;
+
+    /* Blue gradient primary colors */
+    --primary: 217 91% 40%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 200 100% 65%;
+    --primary-dark: 217 91% 30%;
+
+    --glass-bg: 0 0% 100%;
+    --glass-border: 220 50% 85%;
+
+    --secondary: 220 50% 96%;
+    --secondary-foreground: 217 91% 30%;
+
+    --muted: 220 50% 97%;
+    --muted-foreground: 220 20% 50%;
+
+    --accent: 200 60% 95%;
+    --accent-foreground: 217 91% 30%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 40% 90%;
+    --input: 220 40% 90%;
+    --ring: 217 91% 40%;
+
+    --gradient-from: 217 91% 40%;
+    --gradient-to: 200 100% 65%;
+
+    --section-bg: 0 0% 99%;
+    --section-alt: 220 50% 98%;
+  }
+
+  /* Purple & Gold Theme - Rich, Vibrant, Dark Mode */
+  html.theme-purple-gold {
+    --background: 270 60% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 270 50% 12%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 270 50% 12%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Purple & Gold gradient */
+    --primary: 280 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 45 100% 60%;
+    --primary-dark: 280 80% 50%;
+
+    --glass-bg: 270 50% 15%;
+    --glass-border: 280 50% 25%;
+
+    --secondary: 270 50% 18%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 270 50% 20%;
+    --muted-foreground: 270 30% 65%;
+
+    --accent: 280 50% 22%;
+    --accent-foreground: 45 100% 60%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 50% 25%;
+    --input: 270 50% 25%;
+    --ring: 280 80% 60%;
+
+    --gradient-from: 280 80% 60%;
+    --gradient-to: 45 100% 60%;
+
+    --section-bg: 270 60% 10%;
+    --section-alt: 270 50% 12%;
+  }
+  
+  /* Fallback for .theme-purple-gold without html prefix */
+  .theme-purple-gold {
+    --background: 270 60% 8%;
+    --foreground: 0 0% 100%;
+    --card: 270 50% 12%;
+    --card-foreground: 0 0% 100%;
+    --popover: 270 50% 12%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 280 80% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 45 100% 60%;
+    --primary-dark: 280 80% 50%;
+    --glass-bg: 270 50% 15%;
+    --glass-border: 280 50% 25%;
+    --secondary: 270 50% 18%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 270 50% 20%;
+    --muted-foreground: 270 30% 65%;
+    --accent: 280 50% 22%;
+    --accent-foreground: 45 100% 60%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 270 50% 25%;
+    --input: 270 50% 25%;
+    --ring: 280 80% 60%;
+    --gradient-from: 280 80% 60%;
+    --gradient-to: 45 100% 60%;
+    --section-bg: 270 60% 10%;
+    --section-alt: 270 50% 12%;
+  }
+
+  /* Green & Earth Tones Theme - Natural, Calm, Light Mode */
+  html.theme-green-earth,
+  .theme-green-earth {
+    --background: 40 20% 98%;
+    --foreground: 160 30% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 30% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 30% 20%;
+
+    /* Green & Earth gradient */
+    --primary: 160 50% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 120 30% 60%;
+    --primary-dark: 160 50% 25%;
+
+    --glass-bg: 0 0% 100%;
+    --glass-border: 120 30% 85%;
+
+    --secondary: 120 30% 96%;
+    --secondary-foreground: 160 50% 25%;
+
+    --muted: 120 20% 97%;
+    --muted-foreground: 160 20% 50%;
+
+    --accent: 60 30% 95%;
+    --accent-foreground: 160 50% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 120 30% 90%;
+    --input: 120 30% 90%;
+    --ring: 160 50% 35%;
+
+    --gradient-from: 160 50% 35%;
+    --gradient-to: 120 30% 60%;
+
+    --section-bg: 40 20% 99%;
+    --section-alt: 120 20% 98%;
+  }
+
+  /* Dark Gray/Monochromatic Theme - Sleek, Sophisticated, Dark Mode */
+  html.theme-dark-gray,
+  .theme-dark-gray {
+    --background: 0 0% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Monochromatic gray gradient */
+    --primary: 0 0% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 0 0% 65%;
+    --primary-dark: 0 0% 35%;
+
+    --glass-bg: 0 0% 15%;
+    --glass-border: 0 0% 25%;
+
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 0 0% 45%;
+
+    --gradient-from: 0 0% 35%;
+    --gradient-to: 0 0% 65%;
+
+    --section-bg: 0 0% 10%;
+    --section-alt: 0 0% 12%;
+  }
+
+  /* Olive & Gold Theme - Elegant, Sophisticated, Rich */
+  html.theme-olive-gold,
+  .theme-olive-gold {
+    --background: 45 15% 96%;
+    --foreground: 60 20% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 60 20% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 60 20% 15%;
+
+    /* Olive & Gold gradient */
+    --primary: 60 40% 35%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 45 100% 55%;
+    --primary-dark: 60 50% 25%;
+
+    --glass-bg: 0 0% 100%;
+    --glass-border: 60 30% 85%;
+
+    --secondary: 60 25% 95%;
+    --secondary-foreground: 60 40% 25%;
+
+    --muted: 60 20% 97%;
+    --muted-foreground: 60 15% 45%;
+
+    --accent: 45 50% 92%;
+    --accent-foreground: 60 40% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 60 25% 88%;
+    --input: 60 25% 88%;
+    --ring: 60 40% 35%;
+
+    --gradient-from: 60 40% 35%;
+    --gradient-to: 45 100% 55%;
+
+    --section-bg: 45 15% 98%;
+    --section-alt: 60 20% 97%;
   }
 
   .dark {
@@ -114,7 +412,10 @@ All colors MUST be HSL.
 @layer utilities {
   /* Glassmorphism effect */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-xl border border-glass-border shadow-lg;
+    background: hsl(var(--glass-bg) / 0.8);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   }
 
   /* Gradient text */
