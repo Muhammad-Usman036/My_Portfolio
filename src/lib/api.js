@@ -11,16 +11,36 @@ export const api = {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      // Check if response has content before parsing
+      const contentType = response.headers.get('content-type');
+      let data;
+      
+      if (contentType && contentType.includes('application/json')) {
+        data = await response.json();
+      } else {
+        // If not JSON, read as text
+        const text = await response.text();
+        data = text ? JSON.parse(text) : {};
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to submit contact form');
+        // Handle validation errors
+        if (data.errors && Array.isArray(data.errors)) {
+          const errorMessages = data.errors.map(err => err.msg || err.message).join(', ');
+          throw new Error(errorMessages || 'Validation failed');
+        }
+        throw new Error(data.message || `Failed to submit contact form (${response.status})`);
       }
 
       return data;
     } catch (error) {
       console.error('Contact API error:', error);
-      throw error;
+      // If it's already an Error object, throw it as is
+      if (error instanceof Error) {
+        throw error;
+      }
+      // Otherwise, wrap it
+      throw new Error(error.message || 'Failed to submit contact form');
     }
   },
 
