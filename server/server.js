@@ -45,6 +45,33 @@ console.log('Allowed CORS origins:', normalizedOrigins);
 console.log('NODE_ENV:', process.env.NODE_ENV);
 console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     // Allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+    
+//     // In development, allow all origins
+//     if (process.env.NODE_ENV !== 'production') {
+//       return callback(null, true);
+//     }
+    
+//     // Normalize origin (remove trailing slash)
+//     const normalizedOrigin = origin.replace(/\/$/, '');
+    
+//     // Check if origin matches any allowed origin
+//     if (normalizedOrigins.includes(normalizedOrigin)) {
+//       callback(null, true);
+//     } else {
+//       console.log('CORS blocked origin:', origin);
+//       console.log('Normalized origin:', normalizedOrigin);
+//       console.log('Allowed origins:', normalizedOrigins);
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -69,8 +96,11 @@ app.use(cors({
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  preflightContinue: false,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
