@@ -102,6 +102,16 @@ app.use(cors({
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
   preflightContinue: false,
 }));
+
+// Explicit OPTIONS handler for preflight requests
+app.options('*', cors()); // Enable preflight for all routes
+
+// Add logging middleware to see all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
