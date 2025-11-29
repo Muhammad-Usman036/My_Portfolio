@@ -14,19 +14,63 @@ connectDB();
 
 const app = express();
 
+// // Middleware
+// // CORS configuration - allow requests from frontend
+// const allowedOrigins = [
+//   'http://localhost:8080',
+//   'http://localhost:3000',
+//   process.env.FRONTEND_URL, // Your Vercel/deployed frontend URL
+// ].filter(Boolean); // Remove undefined values
+
+// app.use(cors({
+//   origin: process.env.NODE_ENV === 'production' 
+//     ? allowedOrigins 
+//     : true, // Allow all origins in development
+//   credentials: true,
+// }));
 // Middleware
 // CORS configuration - allow requests from frontend
 const allowedOrigins = [
   'http://localhost:8080',
   'http://localhost:3000',
   process.env.FRONTEND_URL, // Your Vercel/deployed frontend URL
+  'https://my-portfolio-ebon-psi-63.vercel.app', // Add your Vercel URL directly as backup
 ].filter(Boolean); // Remove undefined values
 
+// Normalize origins (remove trailing slashes for comparison)
+const normalizedOrigins = allowedOrigins.map(origin => origin.replace(/\/$/, ''));
+
+// Log for debugging
+console.log('Allowed CORS origins:', normalizedOrigins);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? allowedOrigins 
-    : true, // Allow all origins in development
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // In development, allow all origins
+    if (process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // Normalize origin (remove trailing slash)
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    
+    // Check if origin matches any allowed origin
+    if (normalizedOrigins.includes(normalizedOrigin)) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      console.log('Normalized origin:', normalizedOrigin);
+      console.log('Allowed origins:', normalizedOrigins);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
