@@ -2,6 +2,20 @@ import nodemailer from 'nodemailer';
 
 // Create reusable transporter object using SMTP transport
 const createTransporter = () => {
+  // Check if email is configured
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.log('Email not configured - SMTP_USER or SMTP_PASS missing');
+    return null;
+  }
+
+  console.log('Creating email transporter with:', {
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_SECURE === 'true',
+    user: process.env.SMTP_USER,
+    hasPassword: !!process.env.SMTP_PASS,
+  });
+
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.SMTP_PORT || '587'),
@@ -10,6 +24,12 @@ const createTransporter = () => {
       user: process.env.SMTP_USER, // Your email
       pass: process.env.SMTP_PASS, // Your email password or app password
     },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000, // 10 seconds
+    socketTimeout: 10000, // 10 seconds
+    tls: {
+      rejectUnauthorized: false, // Allow self-signed certificates
+    },
   });
 };
 
@@ -17,6 +37,11 @@ const createTransporter = () => {
 export const sendContactNotification = async (contactData) => {
   try {
     const transporter = createTransporter();
+    
+    if (!transporter) {
+      console.log('Email transporter not available - skipping email notification');
+      return { success: false, message: 'Email not configured' };
+    }
 
     // Email to you (notification)
     const mailOptions = {
@@ -48,9 +73,16 @@ export const sendContactNotification = async (contactData) => {
 
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent successfully:', info.messageId);
+    console.log('Email sent to:', process.env.NOTIFICATION_EMAIL || process.env.SMTP_USER);
     return { success: true, messageId: info.messageId };
   } catch (error) {
     console.error('Error sending email:', error);
+    console.error('Error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+    });
     throw error;
   }
 };
@@ -59,6 +91,11 @@ export const sendContactNotification = async (contactData) => {
 export const sendAutoReply = async (contactData) => {
   try {
     const transporter = createTransporter();
+    
+    if (!transporter) {
+      console.log('Email transporter not available - skipping auto-reply');
+      return { success: false, message: 'Email not configured' };
+    }
 
     const mailOptions = {
       from: `"Muhammad Usman" <${process.env.SMTP_USER}>`,
