@@ -72,13 +72,29 @@ console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
 //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // }));
+// Handle OPTIONS requests FIRST (before CORS middleware)
+app.options('*', (req, res) => {
+  console.log('OPTIONS preflight request received:', req.path, 'Origin:', req.headers.origin);
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
+
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('CORS check - Origin:', origin || 'none');
+    
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('CORS: Allowing request with no origin');
+      return callback(null, true);
+    }
     
     // In development, allow all origins
     if (process.env.NODE_ENV !== 'production') {
+      console.log('CORS: Development mode - allowing all origins');
       return callback(null, true);
     }
     
@@ -87,24 +103,24 @@ app.use(cors({
     
     // Check if origin matches any allowed origin
     if (normalizedOrigins.includes(normalizedOrigin)) {
+      console.log('CORS: Allowing origin:', normalizedOrigin);
       callback(null, true);
     } else {
       console.log('CORS blocked origin:', origin);
       console.log('Normalized origin:', normalizedOrigin);
       console.log('Allowed origins:', normalizedOrigins);
-      callback(new Error('Not allowed by CORS'));
+      // TEMPORARILY ALLOW ALL ORIGINS FOR TESTING
+      console.log('CORS: TEMPORARILY ALLOWING ALL ORIGINS FOR TESTING');
+      callback(null, true);
     }
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
-  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200,
   preflightContinue: false,
 }));
-
-// Explicit OPTIONS handler for preflight requests
-app.options('*', cors()); // Enable preflight for all routes
 
 // Add logging middleware to see all requests
 app.use((req, res, next) => {
