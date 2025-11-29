@@ -25,11 +25,15 @@ export const api = {
 
       if (!response.ok) {
         // Handle validation errors
-        if (data.errors && Array.isArray(data.errors)) {
-          const errorMessages = data.errors.map(err => err.msg || err.message).join(', ');
-          throw new Error(errorMessages || 'Validation failed');
+        if (data.errors && Array.isArray(data.errors) && data.errors.length > 0) {
+          const errorMessages = data.errors.map(err => err.msg || err.message || JSON.stringify(err)).join(', ');
+          console.log('Validation errors:', errorMessages);
+          throw new Error(errorMessages);
         }
-        throw new Error(data.message || `Failed to submit contact form (${response.status})`);
+        // If no specific errors, use the message from server
+        const errorMsg = data.message || `Failed to submit contact form (${response.status})`;
+        console.log('API error:', errorMsg);
+        throw new Error(errorMsg);
       }
 
       return data;
