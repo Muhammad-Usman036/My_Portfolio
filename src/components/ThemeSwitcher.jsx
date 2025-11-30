@@ -15,6 +15,10 @@ const colorSchemes = [
   { value: 'green-earth', label: 'Green & Earth', colors: ['#059669', '#84CC16'] },
   { value: 'olive-gold', label: 'Olive & Gold', colors: ['#6B7D2E', '#F4A261'] },
   { value: 'dark-gray', label: 'Dark Gray', colors: ['#737373', '#A3A3A3'] },
+  { value: 'emerald-gold', label: 'Emerald & Gold', colors: ['#047857', '#F59E0B'] },
+  { value: 'mint', label: 'Mint', colors: ['#10B981', '#6EE7B7'] },
+  { value: 'dark-cyan', label: 'Dark Cyan', colors: ['#0891B2', '#22D3EE'] },
+  { value: 'emerald-beige', label: 'Emerald & Beige', colors: ['#047857', '#D4A574'] },
 ];
 
 const ThemeSwitcher = () => {
@@ -33,7 +37,7 @@ const ThemeSwitcher = () => {
           <Palette className="h-7 w-7 text-primary" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 max-h-[80vh] overflow-y-auto">
         {colorSchemes.map((scheme) => (
           <DropdownMenuItem
             key={scheme.value}

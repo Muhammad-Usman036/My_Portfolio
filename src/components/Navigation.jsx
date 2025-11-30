@@ -122,7 +122,7 @@ const Navigation = () => {
                   )} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-48 max-h-[80vh] overflow-y-auto">
                 <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground">
                   Color Themes
                 </div>
